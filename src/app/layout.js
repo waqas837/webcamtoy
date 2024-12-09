@@ -84,11 +84,11 @@ export default function RootLayout({ children }) {
       <body>{children}</body>
 
       {/* Google Analytics Setup */}
-      {/* <Script
+      <Script
         strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=G-JYSD6TBT8K`}
-      /> */}
-      {/* <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=G-J09S1Y7D82`}
+      />
+      <Script
         id="google-analytics"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
@@ -96,12 +96,12 @@ export default function RootLayout({ children }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-JYSD6TBT8K');
+            gtag('config', 'G-J09S1Y7D82');
           `,
         }}
-      /> */}
-      {/* Modern GA4 integration */}
-      {/* <GoogleAnalytics gaId="G-JYSD6TBT8K" /> */}
+      />
+      {/* Modern GA4 integration */} 
+      <GoogleAnalytics gaId="G-J09S1Y7D82" />
     </html>
   );
 }
