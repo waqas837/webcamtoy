@@ -1,6 +1,6 @@
 import Script from "next/script";
 import "./globals.css";
-// import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export default function RootLayout({ children }) {
   const softwareApplication = {
