@@ -6,12 +6,12 @@ import Footer from "@/components/Footer";
 export const metadata = {
   title: "Webcam toy - Smile and Capture",
   description:
-    "Webcam toy is for just fun and you can use over 40 filters, take photos and save them. Photo saved are in very good quality..",
+    "Webcam toy is for fun and you can use over 40+ filters, take photos and save them. Photo saved are in very high quality.",
   keywords: ["webcamtoy", "webcam toy"],
   openGraph: {
     title: "Webcam toy - Smile and Capture",
     description:
-      "Webcam toy is for just fun and you can use over 40 filters, take photos and save them. Photo saved are in very good quality.",
+      "Webcam toy is for fun and you can use over 40+ filters, take photos and save them. Photo saved are in very high quality.",
     type: "website",
     image: "https://webcamtest.live/twitter-image.jpg",
   },
@@ -19,7 +19,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Webcam toy - Smile and Capture",
     description:
-      "Webcam toy is for just fun and you can use over 40 filters, take photos and save them. Photo saved are in very good quality.",
+      "Webcam toy is for fun and you can use over 40+ filters, take photos and save them. Photo saved are in very high quality.",
     image: "https://webcamtest.live/twitter-image.jpg",
   },
   alternates: {
