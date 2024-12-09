@@ -1,101 +1,139 @@
-import Image from "next/image";
+import React from "react";
+import WebcamToyComponent from "@/components/WebcamToyComponent";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
-export default function Home() {
+export const metadata = {
+  title: "Webcam toy - Smile and Capture",
+  description:
+    "Webcam toy is for just fun and you can use over 40 filters, take photos and save them. Photo saved are in very good quality..",
+  keywords: ["webcamtoy", "webcam toy"],
+  openGraph: {
+    title: "Webcam toy - Smile and Capture",
+    description:
+      "Webcam toy is for just fun and you can use over 40 filters, take photos and save them. Photo saved are in very good quality.",
+    type: "website",
+    image: "https://webcamtest.live/twitter-image.jpg",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Webcam toy - Smile and Capture",
+    description:
+      "Webcam toy is for just fun and you can use over 40 filters, take photos and save them. Photo saved are in very good quality.",
+    image: "https://webcamtest.live/twitter-image.jpg",
+  },
+  alternates: {
+    canonical: `https://webcamtest.live/webcam-toy`,
+  },
+};
+
+const WebcamToy = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-rose-100 flex flex-col items-center">
+        {/* Heading Above the Button */}
+        <h2 className="text-3xl font-bold text-purple-700 mt-8">
+          Get Ready for Fun!
+        </h2>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+        {/* Image Gallery Section */}
+        <div className="max-w-3xl mx-auto px-4 mt-4">
+          <h3 className="text-2xl font-semibold text-purple-700 mb-4 text-center">
+            Filters & Effects
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <img
+              src={"/1.jpg"}
+              alt="Gallery Image 1"
+              className="rounded-lg shadow-md"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <img
+              src={"/2.jpg"}
+              alt="Gallery Image 2"
+              className="rounded-lg shadow-md"
+            />
+            <img
+              src={"/3.jpg"}
+              alt="Gallery Image 3"
+              className="rounded-lg shadow-md"
+            />
+            <img
+              src={"/4.jpg"}
+              alt="Gallery Image 4"
+              className="rounded-lg shadow-md"
+            />
+          </div>
+          <h4>And More 40+ filters</h4>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* WebcamToy Component Centered in the Middle of the Screen */}
+        <WebcamToyComponent />
+
+        {/* Remaining Content Below */}
+        <div className="max-w-3xl mx-auto px-4 pb-4">
+          {/* Hero Section */}
+          <div className="pt-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-4">
+              WebcamToy - Filters and Fun
+            </h1>
+            <p className="text-lg text-purple-800 mb-6">
+              Transform your webcam experience and creative filters and instant
+              photo capture. Express yourself and our collection of stunning
+              effects!
+            </p>
+          </div>
+
+          {/* Features Section */}
+          <div className="py-4">
+            <div className="grid md:grid-cols-3 gap-4 mb-8">
+              <div className="bg-white bg-opacity-40 backdrop-blur-sm rounded-xl p-4">
+                <h3 className="text-lg font-semibold text-purple-700 mb-2">
+                  Real-time Filters During Webcam oOpened
+                </h3>
+                <p className="text-sm text-purple-600">
+                  Easily beautiful filters in real-time. From vintage to
+                  dramatic effects, find your perfect style.
+                </p>
+              </div>
+              <div className="bg-white bg-opacity-40 backdrop-blur-sm rounded-xl p-4">
+                <h3 className="text-lg font-semibold text-purple-700 mb-2">
+                  Instant Capture and Gallery Preview
+                </h3>
+                <p className="text-sm text-purple-600">
+                  Take photos instantly with your selected filter. Save your
+                  favorite moments in highy quality.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* How to Use Section */}
+          <div className="py-4 mb-8">
+            <h2 className="text-2xl font-semibold text-purple-700 mb-4">
+              How to Use Webcam Toy?
+            </h2>
+            <div className="bg-white bg-opacity-40 backdrop-blur-sm rounded-xl p-6">
+              <ol className="list-decimal list-inside space-y-3 text-purple-800">
+                <li>
+                  Click the button Ready for fun and allow camera access when
+                  prompted
+                </li>
+                <li>
+                  User Right and Left arrows for your selection of stunning
+                  filters
+                </li>
+                <li>Click the "Take Photo" button to capture your moment</li>
+                <li>Find your photos in the gallery on the right</li>
+                <li>Click "Save" to download any photo you like and love</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
   );
-}
+};
+
+export default WebcamToy;
