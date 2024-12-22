@@ -73,7 +73,7 @@ const WebcamToy = () => {
         {/* Remaining Content Below */}
         <div className="max-w-3xl mx-auto px-4 pb-4">
           {/* Hero Section */}
-          <div className="pt-8">
+          <div className="pt-24">
             <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-4">
               WebcamToy - Filters and Fun
             </h1>

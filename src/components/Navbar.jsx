@@ -14,7 +14,7 @@ const Navbar = () => {
               />
             </div>
             <div className="flex flex-col">
-              <h1 className="text-xl font-bold text-pink-500 tracking-tight">
+              <h1 className="text-xl font-bold text-pink-700 tracking-tight">
                 WebcamToy
               </h1>
               <span className="text-xs text-pink-500 hidden sm:block">
