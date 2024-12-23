@@ -75,7 +75,7 @@ const WebcamToy = () => {
           {/* Hero Section */}
           <div className="pt-24">
             <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-4">
-              WebcamToy - Filters and Fun
+              WebcamToy - Filters and Fun New 2025!
             </h1>
             <p className="text-lg text-purple-800 mb-6">
               Transform your webcam experience and creative filters and instant
