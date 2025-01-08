@@ -1,6 +1,5 @@
-// app/components/WebcamToy.jsx
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import PhotoGallery from "./WebCamElements/PhotoGallery";
 import FilterControls from "./WebCamElements/FilterControls";
 import WebcamControls from "./WebCamElements/WebcamControls";
@@ -23,102 +22,92 @@ const WebcamToy = () => {
   const [selectedFilter, setSelectedFilter] = useState("none");
   const [isCameraStarted, setIsCameraStarted] = useState(false);
   const [selectedEffect, setSelectedEffect] = useState("none");
-  const [animationFrame, setAnimationFrame] = useState(null);
   const effectCanvasRef = useRef(null);
+  const effectInstanceRef = useRef(null);
+  const animationFrameRef = useRef(null);
   const timeRef = useRef(0);
 
   const effects = {
     none: null,
-    createEmojiParticles: createEmojiParticles,
+    createEmojiParticles,
     snow: createSnowParticles,
     rain: createRainParticles,
     bubbles: createBubbleParticles,
     underwater: createUnderwaterParticles,
-    createFlareParticles: createFlareParticles,
-    createBokehParticles: createBokehParticles,
+    createFlareParticles,
+    createFlareParticles,
+    createBokehParticles,
   };
 
   const filterNames = Object.keys(filters);
 
-  useEffect(() => {
-    if (isCameraStarted && effectCanvasRef.current && videoRef.current) {
-      const canvas = effectCanvasRef.current;
-      const ctx = canvas.getContext("2d");
-      let effect = null;
+  const animate = useCallback(() => {
+    if (!effectCanvasRef.current || !videoRef.current) return;
 
-      canvas.width = videoRef.current.videoWidth || 1280;
-      canvas.height = videoRef.current.videoHeight || 720;
+    const canvas = effectCanvasRef.current;
+    const ctx = canvas.getContext("2d");
 
-      if (selectedEffect !== "none" && effects[selectedEffect]) {
-        if (
-          [
-            "createEmojiParticles",
-            "snow",
-            "rain",
-            "bubbles",
-            "underwater",
-            "createFlareParticles",
-            "createBokehParticles",
-          ].includes(selectedEffect)
-        ) {
-          effect = effects[selectedEffect](canvas, ctx);
-        }
-      }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const animate = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Draw video frame
-        if (videoRef.current) {
-          ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-        }
-
-        // Apply CSS filter
-        if (selectedFilter !== "none") {
-          ctx.filter = filters[selectedFilter];
-          ctx.drawImage(canvas, 0, 0);
-          ctx.filter = "none";
-        }
-
-        // Apply advanced effect
-        if (selectedEffect !== "none") {
-          if (
-            [
-              "createEmojiParticles",
-              "snow",
-              "rain",
-              "bubbles",
-              "underwater",
-              "createFlareParticles",
-              "createBokehParticles",
-            ].includes(selectedEffect) &&
-            effect
-          ) {
-            effect.update();
-          } else if (effects[selectedEffect]) {
-            effects[selectedEffect](
-              ctx,
-              canvas.width,
-              canvas.height,
-              timeRef.current
-            );
-          }
-        }
-
-        timeRef.current += 0.01;
-        const frameId = requestAnimationFrame(animate);
-        setAnimationFrame(frameId);
-      };
-
-      animate();
-
-      return () => {
-        if (animationFrame) {
-          cancelAnimationFrame(animationFrame);
-        }
-      };
+    // Draw video frame
+    if (videoRef.current) {
+      ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
     }
-  }, [isCameraStarted, selectedEffect, selectedFilter]);
+
+    // Apply CSS filter
+    if (selectedFilter !== "none") {
+      ctx.filter = filters[selectedFilter];
+      ctx.drawImage(canvas, 0, 0);
+      ctx.filter = "none";
+    }
+
+    // Apply effect if exists
+    if (effectInstanceRef.current?.update) {
+      effectInstanceRef.current.update();
+    }
+
+    timeRef.current += 0.01;
+    animationFrameRef.current = requestAnimationFrame(animate);
+  }, [selectedFilter]);
+
+  useEffect(() => {
+    if (!isCameraStarted || !effectCanvasRef.current || !videoRef.current) return;
+
+    const canvas = effectCanvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    // Set canvas dimensions only when starting camera or resizing
+    canvas.width = videoRef.current.videoWidth || 1280;
+    canvas.height = videoRef.current.videoHeight || 720;
+
+    // Cleanup previous effect
+    if (effectInstanceRef.current?.cleanup) {
+      effectInstanceRef.current.cleanup();
+    }
+
+    // Initialize new effect
+    if (selectedEffect !== "none" && effects[selectedEffect]) {
+      effectInstanceRef.current = effects[selectedEffect](canvas, ctx);
+    } else {
+      effectInstanceRef.current = null;
+    }
+
+    // Start animation
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+    animate();
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      if (effectInstanceRef.current?.cleanup) {
+        effectInstanceRef.current.cleanup();
+      }
+    };
+  }, [isCameraStarted, selectedEffect, animate]);
+
 
   const toggleEffect = (effectName) => {
     setSelectedEffect((prev) => (prev === effectName ? "none" : effectName));
@@ -250,11 +239,10 @@ const WebcamToy = () => {
                     <button
                       key={effect}
                       onClick={() => toggleEffect(effect)}
-                      className={`px-4 py-2 ${
-                        selectedEffect === effect
+                      className={`px-4 py-2 ${selectedEffect === effect
                           ? "bg-purple-600"
                           : "bg-purple-400"
-                      } text-white text-sm rounded-full font-medium hover:opacity-90 transition-opacity shadow`}
+                        } text-white text-sm rounded-full font-medium hover:opacity-90 transition-opacity shadow`}
                     >
                       {effect === "createEmojiParticles" && "😊"}
                       {effect === "snow" && "❄️"}
