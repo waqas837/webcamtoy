@@ -1,32 +1,42 @@
-// app/components/WebcamControls.jsx
 "use client";
 import React from "react";
+import { Camera, CameraOff } from "lucide-react"; // Import Camera icon from lucide-react
 
 const WebcamControls = ({ onStartCamera, onStopCamera, isCameraStarted }) => {
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-      {!isCameraStarted && (
-        <p className="text-center my-5 font-bold text-purple-600">
-          Are You Ready?
-        </p>
-      )}
-      {!isCameraStarted ? (
-        <button
-          onClick={onStartCamera}
-          className="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-lg rounded-full font-semibold shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:ring-opacity-50"
-        >
-          Start Camera
-        </button>
-      ) : (
-        <div className="my-4">
+    <div
+      className="flex flex-col items-center justify-center h-full bg-cover bg-center rounded-xl"
+      style={{
+        backgroundImage: 'url("/camera-background.jpg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="p-6 text-center">
+        {!isCameraStarted && (
+          <p className="text-2xl font-bold text-pink-500 mb-6">
+            Are You Ready to Capture Fun Moments?
+          </p>
+        )}
+
+        {!isCameraStarted ? (
+          <button
+            onClick={onStartCamera}
+            className="m-auto px-8 py-4 bg-gradient-to-r from-pink-600 to-purple-600 text-white text-xl font-semibold rounded-full shadow-lg hover:scale-110 transition-all duration-300 ease-in-out transform flex items-center gap-3"
+          >
+            <Camera className="w-6 h-6" /> {/* Camera Icon */}
+            Start Camera
+          </button>
+        ) : (
           <button
             onClick={onStopCamera}
-            className="px-4 py-2 bg-gradient-to-r from-purple-500 to-red-500 text-white text-sm rounded-full font-medium hover:opacity-90 transition-opacity shadow"
+            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-red-600 text-white text-sm font-medium rounded-full hover:opacity-80 shadow-xl flex items-center gap-3 hover:scale-110 transition-all duration-300 ease-in-out transform"
           >
+            <CameraOff className="w-6 h-6" />
             Exit Camera
           </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

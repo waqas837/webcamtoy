@@ -12,6 +12,8 @@ import {
   createFlareParticles,
   createBokehParticles,
   createEmojiParticles,
+  createFlowerParticles,
+  createUniqueGeometricGlowParticles,
 } from "../../lib/advancedFilters";
 
 const WebcamToy = () => {
@@ -37,6 +39,8 @@ const WebcamToy = () => {
     createFlareParticles,
     createFlareParticles,
     createBokehParticles,
+    createFlowerParticles,
+    createUniqueGeometricGlowParticles,
   };
 
   const filterNames = Object.keys(filters);
@@ -71,7 +75,8 @@ const WebcamToy = () => {
   }, [selectedFilter]);
 
   useEffect(() => {
-    if (!isCameraStarted || !effectCanvasRef.current || !videoRef.current) return;
+    if (!isCameraStarted || !effectCanvasRef.current || !videoRef.current)
+      return;
 
     const canvas = effectCanvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -107,7 +112,6 @@ const WebcamToy = () => {
       }
     };
   }, [isCameraStarted, selectedEffect, animate]);
-
 
   const toggleEffect = (effectName) => {
     setSelectedEffect((prev) => (prev === effectName ? "none" : effectName));
@@ -195,7 +199,7 @@ const WebcamToy = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-purple-100 via-pink-100 to-rose-100 py-4 flex items-center justify-center">
+    <div>
       <div className="max-w-3xl mx-auto px-4">
         <WebcamControls
           onStartCamera={startCamera}
@@ -225,24 +229,25 @@ const WebcamToy = () => {
               onChangeFilter={changeFilter}
             />
 
-            <div className="flex items-center justify-between mt-3 gap-2">
+            <div className="flex items-center justify-between mt-3 gap-2 flex-wrap">
               <button
                 onClick={captureImage}
-                className="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm rounded-full font-medium hover:opacity-90 transition-opacity shadow"
+                className="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm rounded-full font-medium hover:opacity-90 transition-opacity shadow-lg filter hover:brightness-110 hover:contrast-125"
               >
                 📸 Capture
               </button>
-              <p>Effects</p>
+              <p className="text-lg font-medium">Effects</p>
               {Object.keys(effects).map(
                 (effect) =>
                   effect !== "none" && (
                     <button
                       key={effect}
                       onClick={() => toggleEffect(effect)}
-                      className={`px-4 py-2 ${selectedEffect === effect
+                      className={`px-4 py-2 ${
+                        selectedEffect === effect
                           ? "bg-purple-600"
                           : "bg-purple-400"
-                        } text-white text-sm rounded-full font-medium hover:opacity-90 transition-opacity shadow`}
+                      } text-white text-sm rounded-full font-medium hover:opacity-90 transition-opacity shadow-lg filter hover:brightness-110 hover:contrast-125`}
                     >
                       {effect === "createEmojiParticles" && "😊"}
                       {effect === "snow" && "❄️"}
@@ -251,6 +256,8 @@ const WebcamToy = () => {
                       {effect === "underwater" && "🐠"}
                       {effect === "createFlareParticles" && "✨"}
                       {effect === "createBokehParticles" && "🔵"}
+                      {effect === "createFlowerParticles" && "🌼"}
+                      {effect === "createUniqueGeometricGlowParticles" && "🌟"}
                       {/* Add more icons for other effects if needed */}
                     </button>
                   )
