@@ -1,6 +1,8 @@
 import Script from "next/script";
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function RootLayout({ children }) {
   const softwareApplication = {
@@ -8,8 +10,7 @@ export default function RootLayout({ children }) {
     "@type": "SoftwareApplication",
     url: "https://webcamtoy.pro/",
     name: "webcamtoy, Capture beautiful moments",
-    description:
-      "Use this application for capture your beautiful moments.",
+    description: "Use this application for capture your beautiful moments.",
     operatingSystem: "Windows, MacOS, Chrome OS, Linux, iOS, Android",
     applicationCategory: "UtilitiesApplication",
     offers: {
@@ -84,8 +85,11 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body>{children}</body>
-
+      <body>
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
       {/* Google Analytics Setup */}
       <Script
         strategy="afterInteractive"
