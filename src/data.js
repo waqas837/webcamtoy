@@ -7,7 +7,7 @@ export const blogs = [
     description:
       "Webcam Toy is a fun tool to take creative photos with over 40+ filters. Learn how to use it to enhance your webcam experience.",
     keywords: ["webcam toy", "webcamtoy", "web cam toy", "camtoy"],
-    image: "/images/how to use.jpg", // Path to the image
+    image: "/images/how-to-use.jpg", // Path to the image
     content: `
   <p>Webcam Toy is a popular and fun tool that allows you to add creative filters to your webcam photos. Whether you're searching for "webcam toy," "webcamtoy," or "web cam toy," this guide will walk you through everything you need to know about using this amazing tool.</p>
 
@@ -69,7 +69,7 @@ export const blogs = [
     description:
       "Discover the top 10 camera filters for creative photos. Whether you're using a webcam toy or camtoy, these filters will elevate your photography.",
     keywords: ["cam filters", "camera filters", "computer camera filters"],
-    image: "/images/camera filters.jpg", // Path to the image
+    image: "/images/camera-filters.jpg", // Path to the image
     content: `
   <p>Camera filters are an excellent way to add creativity and personality to your photos. Whether you're using a "webcam toy," "camtoy," or any other camera tool, filters can completely transform your images, giving them a unique and artistic touch.</p>
 

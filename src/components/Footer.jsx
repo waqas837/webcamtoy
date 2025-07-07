@@ -35,6 +35,9 @@ const Footer = () => {
             <p className="text-xs text-pink-500 mt-1">
               Capture the beautiful ♥ moments
             </p>
+            <Link href="/privacy-policy" className="text-xs text-pink-500 mt-2 block">
+              Privacy Policy
+            </Link>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
-import { blogs } from "@/data";
+export const dynamic = 'force-dynamic';
+import { ArrowRight } from "lucide-react"; // Import the ArrowRight icon
 
 // Generate metadata for the Blog Page
 export async function generateMetadata() {
@@ -12,7 +13,7 @@ export async function generateMetadata() {
         "Explore our blog for tips, tutorials, and guides on using Webcam Toy, cam filters, and more.",
       images: [
         {
-          url: "https://yourwebsite.com/images/blog-cover.jpg", // Default blog cover image
+          url: "https://webcamtoy.pro/logo2.png", // Default blog cover image
           width: 1200,
           height: 630,
           alt: "Blog - Webcam Toy",
@@ -24,12 +25,24 @@ export async function generateMetadata() {
       title: "Blog - Webcam Toy",
       description:
         "Explore our blog for tips, tutorials, and guides on using Webcam Toy, cam filters, and more.",
-      images: ["https://yourwebsite.com/images/blog-cover.jpg"], // Default blog cover image
+      images: ["https://webcamtoy.pro/logo2.png"], // Default blog cover image
     },
   };
 }
 
-export default function BlogPage() {
+// Fetch blog posts from the WordPress API
+async function getBlogPosts() {
+  const res = await fetch("https://padelracket.site/wp-json/custom/v1/posts");
+  if (!res.ok) {
+    throw new Error("Failed to fetch blog posts");
+  }
+  return res.json();
+}
+
+export default async function BlogPage() {
+  // Fetch blog posts
+  const blogs = await getBlogPosts();
+
   return (
     <div className="container mx-auto px-4 py-12">
       {/* Page Title */}
@@ -46,7 +59,7 @@ export default function BlogPage() {
           >
             <div className="h-48 relative">
               <img
-                src={blog.image}
+                src={blog.featured_image}
                 alt={blog.title}
                 className="w-full h-full object-cover object-center" // Center the image
               />
@@ -58,26 +71,14 @@ export default function BlogPage() {
               <h2 className="text-2xl font-bold text-purple-700 mb-3">
                 {blog.title}
               </h2>
-              <p className="text-purple-600 mb-4">{blog.description}</p>
+              <p className="text-purple-600 mb-4">{blog.short_description}</p>
               <a
-                href={`/blog/${blog.slug}`}
+                href={`/blog/${blog.permalink_title}`} // Use blog.id or blog.slug if available
                 className="inline-flex items-center text-pink-600 hover:text-purple-600 font-medium transition-colors duration-300"
               >
                 Read More
-                <svg
-                  className="w-4 h-4 ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
+                <ArrowRight className="w-4 h-4 ml-2" />{" "}
+                {/* Lucide ArrowRight icon */}
               </a>
             </div>
           </div>

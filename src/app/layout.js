@@ -37,8 +37,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <meta name="google-adsense-account" content="ca-pub-1423066258812449" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
+
         <link
           rel="icon"
           href="/favicon-32x32.png"
@@ -83,6 +83,11 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(softwareApplication),
           }}
+        />
+        {/* Added Monetization Script */}
+        <Script
+          strategy="afterInteractive"
+          src="//pl25628236.profitableratecpm.com/7f/71/5c/7f715c7f0f2bc1768d0a04ba1cfd139b.js"
         />
       </head>
       <body>

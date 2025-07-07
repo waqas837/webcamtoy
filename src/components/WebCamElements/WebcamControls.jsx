@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { Camera, CameraOff } from "lucide-react"; // Import Camera icon from lucide-react
 
 const WebcamControls = ({ onStartCamera, onStopCamera, isCameraStarted }) => {
@@ -8,8 +7,8 @@ const WebcamControls = ({ onStartCamera, onStopCamera, isCameraStarted }) => {
       className="flex flex-col items-center justify-center h-full bg-cover bg-center rounded-xl"
       style={{
         backgroundImage: 'url("/camera-background.jpg")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       <div className="p-6 text-center">

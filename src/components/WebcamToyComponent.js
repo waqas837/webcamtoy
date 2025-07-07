@@ -42,6 +42,7 @@ const WebcamToy = () => {
     createFlowerParticles,
     createUniqueGeometricGlowParticles,
   };
+  const photoGalleryRef = useRef(null); // Ref to the PhotoGallery component or its container
 
   const filterNames = Object.keys(filters);
 
@@ -69,7 +70,6 @@ const WebcamToy = () => {
     if (effectInstanceRef.current?.update) {
       effectInstanceRef.current.update();
     }
-
     timeRef.current += 0.01;
     animationFrameRef.current = requestAnimationFrame(animate);
   }, [selectedFilter]);
@@ -132,6 +132,14 @@ const WebcamToy = () => {
       });
       setStream(mediaStream);
       setIsCameraStarted(true);
+      // Scroll to bottom when camera starts
+      setTimeout(() => {
+        typeof window !== "undefined" &&
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth",
+          });
+      }, 200);
     } catch (err) {
       console.error("Error accessing webcam:", err);
     }
@@ -177,6 +185,17 @@ const WebcamToy = () => {
     }
   };
 
+  useEffect(() => {
+    if (capturedImages.length > 0 && photoGalleryRef.current) {
+      // Scroll to bottom after the images are updated
+      // scrollTop means "How an element has been scrolled Down"
+      // scrollHeight means "Total hieght of everything"
+      photoGalleryRef.current.scrollTop = photoGalleryRef.current.scrollHeight;
+      //Or for smooth scrolling
+      photoGalleryRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [capturedImages]); // This useEffect runs when capturedImages changes
+
   const downloadImage = (imageUrl) => {
     const link = document.createElement("a");
     link.href = imageUrl;
@@ -205,10 +224,11 @@ const WebcamToy = () => {
           onStartCamera={startCamera}
           onStopCamera={stopCamera}
           isCameraStarted={isCameraStarted}
+          photoGalleryRef={photoGalleryRef}
         />
 
         {isCameraStarted && (
-          <div className="relative">
+          <div className="relative my-10">
             <video
               ref={videoRef}
               autoPlay
@@ -228,7 +248,6 @@ const WebcamToy = () => {
               selectedFilter={selectedFilter}
               onChangeFilter={changeFilter}
             />
-
             <div className="flex items-center justify-between mt-3 gap-2 flex-wrap">
               <button
                 onClick={captureImage}
@@ -265,13 +284,12 @@ const WebcamToy = () => {
             </div>
           </div>
         )}
-
         <PhotoGallery
+          photoGalleryRef={photoGalleryRef} // Add the ref here
           capturedImages={capturedImages}
           onDownloadImage={downloadImage}
           onDeleteImage={deleteImage}
         />
-
         <canvas ref={canvasRef} style={{ display: "none" }} />
       </div>
     </div>

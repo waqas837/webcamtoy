@@ -3,11 +3,25 @@ import WebcamToyComponent from "@/components/WebcamToyComponent";
 export const metadata = {
   title: "Webcam Toy - Fun Filters for Creative Photos",
   description:
-    "Use Webcam Toy to take creative photos with over 40+ fun filters. Enhance your webcam experience and save high-quality images.",
+    "Use Webcam Toy, the best online camera with 40+ fun filters! Enjoy a creative photo booth experience and capture high-quality images with your web cam.",
+  keywords: [
+    "webcam toy",
+    "online camera",
+    "camera online",
+    "web cam",
+    "photobooth",
+    "photo booth",
+    "cam",
+    "webcamtoy",
+    "webcam",
+    "camera",
+    "web cam toy",
+    "camtoy",
+  ],
   openGraph: {
     title: "Webcam Toy - Fun Filters for Creative Photos",
     description:
-      "Use Webcam Toy to take creative photos with over 40+ fun filters. Enhance your webcam experience and save high-quality images.",
+      "Use Webcam Toy, the best online camera with 40+ fun filters! Enjoy a creative photo booth experience and capture high-quality images with your web cam.",
     images: [
       {
         url: "https://webcamtoy.pro/logo2.png", // Add a cover image URL
@@ -21,7 +35,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Webcam Toy - Fun Filters for Creative Photos",
     description:
-      "Use Webcam Toy to take creative photos with over 40+ fun filters. Enhance your webcam experience and save high-quality images.",
+      "Use Webcam Toy, the best online camera with 40+ fun filters! Enjoy a creative photo booth experience and capture high-quality images with your web cam.",
     images: ["https://webcamtoy.pro/logo2.png"], // Add a cover image URL
   },
 };

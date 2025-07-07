@@ -3,22 +3,22 @@ import BlogSection from "@/components/HomeSections/BlogsSection";
 import StartButton from "@/components/HomeSections/Startbutton";
 
 export const metadata = {
-  title: "Webcam Toy - 40+ New Filters 2025",
+  title: "Official 📷 Webcam Toy - ✔️ 50+ Webcam Filters 2025",
   description:
-    "Webcam Toy (or webcam oy, toycam, camera toy) is for fun and you can use over 40+ filters, take photos, and save them. Photos saved are in very high quality.",
+    "Webcam Toy Official is for fun and you can use over 40+ filters, take photos, and save them. Photos saved are in very high quality.",
   keywords: ["webcamtoy", "webcam toy", "webcam oy", "toycam", "camera toy"], // Added "camera toy"
   openGraph: {
-    title: "Webcam Toy - 40+ New Filters 2025",
+    title: "Official 📷 Webcam Toy - ✔️ 50+ Webcam Filters 2025",
     description:
-      "Webcam Toy (or webcam oy, toycam, camera toy) is for fun and you can use over 40+ filters, take photos, and save them. Photos saved are in very high quality.",
+      "Webcam Toy Official is for fun and you can use over 40+ filters, take photos, and save them. Photos saved are in very high quality.",
     type: "website",
     image: "https://webcamtoy.pro/logo2.png",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Webcam Toy - 40+ New Filters 2025",
+    title: "Official 📷 Webcam Toy - ✔️ 50+ Webcam Filters 2025",
     description:
-      "Webcam Toy (or webcam oy, toycam, camera toy) is for fun and you can use over 40+ filters, take photos, and save them. Photos saved are in very high quality.",
+      "Webcam Toy Official is for fun and you can use over 40+ filters, take photos, and save them. Photos saved are in very high quality.",
     image: "https://webcamtoy.pro/logo2.png",
   },
   alternates: {

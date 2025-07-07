@@ -1,10 +1,31 @@
-import { blogs } from "@/data";
+export const dynamic = 'force-dynamic';
 import Script from "next/script";
 import Link from "next/link";
+import { ArrowRight, ArrowLeft } from "lucide-react"; // Import Lucide icons
+
+// Fetch blog post from the WordPress API
+async function getBlogPost(permalink_title) {
+  const res = await fetch(
+    `https://padelracket.site/wp-json/custom/v1/posts/${permalink_title}`
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch blog post");
+  }
+  return res.json();
+}
+
+// Fetch all blog posts for related posts logic
+async function getAllBlogPosts() {
+  const res = await fetch("https://padelracket.site/wp-json/custom/v1/posts");
+  if (!res.ok) {
+    throw new Error("Failed to fetch blog posts");
+  }
+  return res.json();
+}
 
 // Generate metadata for the Blog Post Page
 export async function generateMetadata({ params }) {
-  const blog = blogs.find((blog) => blog.slug === params.slug);
+  const blog = await getBlogPost(params.slug);
 
   if (!blog) {
     return {
@@ -14,14 +35,14 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: blog.meta.title,
-    description: blog.meta.description,
+    title: blog.title,
+    description: blog.short_description,
     openGraph: {
-      title: blog.meta.title,
-      description: blog.meta.description,
+      title: blog.title,
+      description: blog.short_description,
       images: [
         {
-          url: blog.image,
+          url: blog.featured_image,
           width: 1200,
           height: 630,
           alt: blog.title,
@@ -30,28 +51,31 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: "summary_large_image",
-      title: blog.meta.title,
-      description: blog.meta.description,
-      images: [blog.image],
+      title: blog.title,
+      description: blog.short_description,
+      images: [blog.featured_image],
     },
   };
 }
 
-export default function BlogPost({ params }) {
-  const blog = blogs.find((blog) => blog.slug === params.slug);
+export default async function BlogPost({ params }) {
+  const blog = await getBlogPost(params.slug);
 
   if (!blog) {
     return <div>Blog post not found.</div>;
   }
 
-  // Function to find related posts based on shared keywords
+  // Fetch all posts for related posts logic
+  const allBlogs = await getAllBlogPosts();
+
+  // Function to find related posts based on shared keywords (if available)
   const getRelatedPosts = (currentBlog) => {
-    return blogs
+    return allBlogs
       .filter(
         (relatedBlog) =>
           relatedBlog.id !== currentBlog.id && // Exclude the current blog
-          relatedBlog.keywords.some((keyword) =>
-            currentBlog.keywords.includes(keyword)
+          relatedBlog.keywords?.some((keyword) =>
+            currentBlog.keywords?.includes(keyword)
           ) // Check for shared keywords
       )
       .slice(0, 3); // Limit to 3 related posts
@@ -61,11 +85,14 @@ export default function BlogPost({ params }) {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      {/* JSON-LD Schema */}
-      <Script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blog.schema) }}
-      />
+       
+      {/* JSON-LD Schema (if available) */}
+      {blog.schema && (
+        <Script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(blog.schema) }}
+        />
+      )}
 
       {/* Back to All Blog Posts Button */}
       <div className="mb-8">
@@ -73,20 +100,7 @@ export default function BlogPost({ params }) {
           href="/blogs"
           className="inline-flex items-center text-purple-600 hover:text-purple-800 transition-colors duration-300"
         >
-          <svg
-            className="w-5 h-5 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
-          </svg>
+          <ArrowLeft className="w-5 h-5 mr-2" /> {/* Lucide ArrowLeft icon */}
           All Blog Posts
         </Link>
       </div>
@@ -100,15 +114,15 @@ export default function BlogPost({ params }) {
 
         {/* Blog Meta (Optional) */}
         <div className="flex items-center space-x-4 text-purple-600 mb-8">
-          <span>By Admin</span>
+          <span>By {blog.author}</span>
           <span>•</span>
-          <span>5 min read</span>
+          <span>{new Date(blog.published_date).toLocaleDateString()}</span>
         </div>
 
         {/* Blog Image */}
         <div className="h-96 relative rounded-xl overflow-hidden mb-8">
           <img
-            src={blog.image}
+            src={blog.featured_image}
             alt={blog.title}
             className="w-full h-full object-cover"
           />
@@ -137,7 +151,7 @@ export default function BlogPost({ params }) {
                 {/* Related Post Image */}
                 <div className="h-48 relative">
                   <img
-                    src={post.image}
+                    src={post.featured_image}
                     alt={post.title}
                     className="w-full h-full object-cover"
                   />
@@ -149,26 +163,16 @@ export default function BlogPost({ params }) {
                   <h3 className="text-xl font-bold text-purple-700 mb-3">
                     {post.title}
                   </h3>
-                  <p className="text-purple-600 mb-4">{post.description}</p>
+                  <p className="text-purple-600 mb-4">
+                    {post.short_description}
+                  </p>
                   <a
-                    href={`/blog/${post.slug}`}
+                    href={`/blog/${post.id}`} // Use post.id or post.slug if available
                     className="inline-flex items-center text-pink-600 hover:text-purple-600 font-medium transition-colors duration-300"
                   >
                     Read More
-                    <svg
-                      className="w-4 h-4 ml-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
+                    <ArrowRight className="w-4 h-4 ml-2" />{" "}
+                    {/* Lucide ArrowRight icon */}
                   </a>
                 </div>
               </div>
